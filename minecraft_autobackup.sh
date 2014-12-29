@@ -6,6 +6,9 @@
 
 #Variables
 
+# The location of the minecraft directory.
+MCTOP="${HOME}/minecraft"
+
 # DateTime stamp format that is used in the tar file names.
 STAMP=`date +%d-%m-%Y_%H%M%S`
 
@@ -55,6 +58,11 @@ SCPPATH="/home/username/backup/minecraft"
 LOGIT=1
 
 # *-------------------------* SCRIPT *-------------------------*
+
+# Save current directory and go to Minecraft directory.
+SCRIPTDIR=${PWD}
+cd ${MCTOP}
+
 # Set todays backup dir
 
 if [ $LOGIT -eq 1 ]
@@ -225,7 +233,7 @@ then
    #Check if cronjob exists, if not then create.
    crontab -l > .crons
    EXIST=`crontab -l | grep $0 | cut -d";" -f2`
-   CRONSET="$MINS * * * * cd $PWD;$0"
+   CRONSET="$MINS * * * * cd ${MCTOP};$0"
 
    if [ "$EXIST" == "$0" ]
    then
@@ -253,3 +261,6 @@ then
    fi
 
 fi
+
+cd ${SCRIPTDIR}
+

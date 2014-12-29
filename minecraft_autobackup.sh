@@ -134,22 +134,27 @@ then
    echo "$(date +"%G-%m-%d %H:%M:%S") [LOG] Level-Name is $WORLD"
 fi
 
+if [ $LOGIT -eq 1 ]
+then
+   echo "$(date +"%G-%m-%d %H:%M:%S") [LOG] Packing and compressing folder: $WORLD to tar file: $FINALDIR/$BFILE"
+fi
 BFILE="$WORLD.$STAMP.tar.gz"
 CMD="tar -czf $FINALDIR/$BFILE $WORLD"
 if [ -e "${WORLD}_nether" ]; then
+   if [ $LOGIT -eq 1 ]
+   then
+      echo "$(date +"%G-%m-%d %H:%M:%S") [LOG] Packing and compressing folder: ${WORLD}_nether to tar file: $FINALDIR/$BFILEN"
+   fi
    BFILEN="${WORLD}_nether.$STAMP.tar.gz"
    CMDN="tar -czf $FINALDIR/$BFILEN ${WORLD}_nether"
 fi
 if [ -e "${WORLD}_the_end" ]; then
+   if [ $LOGIT -eq 1 ]
+   then
+      echo "$(date +"%G-%m-%d %H:%M:%S") [LOG] Packing and compressing folder: ${WORLD}_the_end to tar file: $FINALDIR/$BFILEE"
+   fi
    BFILEE="${WORLD}_the_end.$STAMP.tar.gz"
    CMDE="tar -czf $FINALDIR/$BFILEE ${WORLD}_the_end"
-fi
-
-if [ $LOGIT -eq 1 ]
-then
-   echo "$(date +"%G-%m-%d %H:%M:%S") [LOG] Packing and compressing folder: $WORLD to tar file: $FINALDIR/$BFILE"
-   echo "$(date +"%G-%m-%d %H:%M:%S") [LOG] Packing and compressing folder: ${WORLD}_nether to tar file: $FINALDIR/$BFILEN"
-   echo "$(date +"%G-%m-%d %H:%M:%S") [LOG] Packing and compressing folder: ${WORLD}_the_end to tar file: $FINALDIR/$BFILEE"
 fi
 
 if [ $NOTIFY -eq 1 ]

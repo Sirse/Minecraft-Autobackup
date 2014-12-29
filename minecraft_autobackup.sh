@@ -136,10 +136,14 @@ fi
 
 BFILE="$WORLD.$STAMP.tar.gz"
 CMD="tar -czf $FINALDIR/$BFILE $WORLD"
-BFILEN="${WORLD}_nether.$STAMP.tar.gz"
-CMDN="tar -czf $FINALDIR/$BFILEN ${WORLD}_nether"
-BFILEE="${WORLD}_the_end.$STAMP.tar.gz"
-CMDE="tar -czf $FINALDIR/$BFILEE ${WORLD}_the_end"
+if [ -e "${WORLD}_nether" ]; then
+   BFILEN="${WORLD}_nether.$STAMP.tar.gz"
+   CMDN="tar -czf $FINALDIR/$BFILEN ${WORLD}_nether"
+fi
+if [ -e "${WORLD}_the_end" ]; then
+   BFILEE="${WORLD}_the_end.$STAMP.tar.gz"
+   CMDE="tar -czf $FINALDIR/$BFILEE ${WORLD}_the_end"
+fi
 
 if [ $LOGIT -eq 1 ]
 then

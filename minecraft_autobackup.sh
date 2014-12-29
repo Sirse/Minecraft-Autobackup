@@ -60,7 +60,9 @@ LOGIT=1
 # *-------------------------* SCRIPT *-------------------------*
 
 # Save current directory and go to Minecraft directory.
-SCRIPTDIR=${PWD}
+SCRIPTNAME=$(basename $0)
+SCRIPTDIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+SCRIPT="${SCRIPTDIR}/${SCRIPTNAME}"
 cd ${MCTOP}
 
 # Set todays backup dir
@@ -232,17 +234,17 @@ then
 
    #Check if cronjob exists, if not then create.
    crontab -l > .crons
-   EXIST=`crontab -l | grep $0 | cut -d";" -f2`
-   CRONSET="$MINS * * * * cd ${MCTOP};$0"
+   EXIST=`crontab -l | grep ${SCRIPT} | cut -d";" -f2`
+   CRONSET="$MINS * * * * cd ${MCTOP};${SCRIPT}"
 
-   if [ "$EXIST" == "$0" ]
+   if [ "$EXIST" == "${SCRIPT}" ]
    then
 
       #Check if cron needs updating.
-      THECRON=`crontab -l | grep $0`
+      THECRON=`crontab -l | grep ${SCRIPTNAME}`
       if [ "$THECRON" != "$CRONSET" ]
       then
-         CRONS=`crontab -l | grep -v "$0"`
+         CRONS=`crontab -l | grep -v "${SCRIPT}"`
          echo "$CRONS" > .crons
          echo "$CRONSET" >> .crons
          crontab .crons
